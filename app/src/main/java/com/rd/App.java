@@ -9,15 +9,17 @@ import com.baidu.mapapi.*;
 public class App extends Application {
 
 	static App mDemoApp;
-    // 百度MapAPI的管理类
+
+	// 百度MapAPI的管理类
 	public BMapManager mBMapMan = null;
 
-    // 授权Key
-    // TODO: 请输入您的Key,
-    // 申请地址：http://dev.baidu.com/wiki/static/imap/key/
+	// 授权Key
+	// TODO: 请输入您的Key,
+	// 申请地址：http://dev.baidu.com/wiki/static/imap/key/
 	public String mStrKey = "E3041FEDFA4A24627A4B76539E07658B0FE44A5D";
-	boolean m_bKeyRight = true;
+	boolean m_bKeyRight = true; // 授权Key正确，验证通过
 
+	// 常用事件监听，用来处理通常的网络错误，授权验证错误等
 	public static class MyGeneralListener implements MKGeneralListener {
 		@Override
 		public void onGetNetworkState(int iError) {
@@ -28,9 +30,10 @@ public class App extends Application {
 		@Override
 		public void onGetPermissionState(int iError) {
 			if (iError == MKEvent.ERROR_PERMISSION_DENIED) {
+				// 授权Key错误：
 				Toast.makeText(App.mDemoApp.getApplicationContext(),
-                        "请在BMapApiDemoApp.java文件输入正确的授权Key！", Toast.LENGTH_LONG)
-                        .show();
+						"请在BMapApiDemoApp.java文件输入正确的授权Key！", Toast.LENGTH_LONG)
+						.show();
 				App.mDemoApp.m_bKeyRight = false;
 			}
 		}
@@ -51,6 +54,7 @@ public class App extends Application {
 	}
 
 	@Override
+	// 建议在您app的退出之前调用mapadpi的destroy()函数，避免重复初始化带来的时间消耗
 	public void onTerminate() {
 		if (mBMapMan != null) {
 			mBMapMan.destroy();

@@ -40,10 +40,10 @@ import android.widget.Toast;
 public class StepOne extends MapActivity {
 
 	MapView mMapView = null;
-	LocationListener mLocationListener = null;// onResumeʱע���listener��onPauseʱ��ҪRemove
-	MyLocationOverlay mLocationOverlay = null; // ��λͼ��
+	LocationListener mLocationListener = null;// onResume时注册此listener，onPause时需要Remove
+	MyLocationOverlay mLocationOverlay = null; // 定位图层
 
-	String cityName;
+	//String cityName;
 	MapController mMapController;
 
 	EditText input_address;
@@ -72,21 +72,26 @@ public class StepOne extends MapActivity {
 			app.mBMapMan.init(app.mStrKey, new App.MyGeneralListener());
 		}
 		app.mBMapMan.start();
+		// 如果使用地图SDK，请初始化地图Activity
 		super.initMapActivity(app.mBMapMan);
 
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mMapView.setBuiltInZoomControls(true);
+		// 设置在缩放动画过程中也显示overlay,默认为不绘制
 		mMapView.setDrawOverlayWhenZooming(true);
 		mMapView.setBuiltInZoomControls(true);
-		mMapController = mMapView.getController();
+		// 初始化搜索模块，注册事件监听
+		mMapController = mMapView.getController(); // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
 		GeoPoint point = new GeoPoint((int) (39.915 * 1E6),
-				(int) (116.404 * 1E6));
-		mMapController.setCenter(point);
-		mMapController.setZoom(18);
+				(int) (116.404 * 1E6)); // 用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
+		mMapController.setCenter(point); // 设置地图中心点
+		mMapController.setZoom(18); // 设置地图zoom级别
 
+		// 添加定位图层
 		mLocationOverlay = new MyLocationOverlay(this, mMapView);
 		mMapView.getOverlays().add(mLocationOverlay);
 
+		// 注册定位事件
 		mLocationListener = new LocationListener() {
 
 			@Override
@@ -109,7 +114,7 @@ public class StepOne extends MapActivity {
 							try {
 								String add = getJson.getAddress(lang, lant,
 										StepOne.this);
-								if (add != "") {
+								if (!add.equals("")) {
 									Message message = new Message();
 									message.what = getAddSuccess;
 									message.obj = add;
@@ -159,7 +164,7 @@ public class StepOne extends MapActivity {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case getAddFail:
-				loadText.setText("定位失败，请稍后重试");
+				loadText.setText("定位失败，请稍后重试！");
 				input_address.setText(R.string.loadAddFail);
 				break;
 			case getAddSuccess:
@@ -179,13 +184,13 @@ public class StepOne extends MapActivity {
 				if (!app.getLogin()) {
 					startActivity(new Intent(StepOne.this, Login.class));
 				} else {
-					String beignStr = input_address.getText().toString().trim();
-					if (beignStr.equals("")
-							|| beignStr.equals(R.string.loadingAdd)
-							|| beignStr.equals(R.string.loadAddFail)) {
+					String beginStr = input_address.getText().toString().trim();
+					if (beginStr.equals("")
+							|| beginStr.equals(R.string.loadingAdd)
+							|| beginStr.equals(R.string.loadAddFail)) {
 						ShowToast(R.string.beginErr);
 					} else {
-						SaveBegin(beignStr);
+						SaveBegin(beginStr);
 						startActivity(new Intent(StepOne.this, StepTwo.class));
 					}
 				}
@@ -196,7 +201,7 @@ public class StepOne extends MapActivity {
 			}
 		}
 	}
-	//���ò˵�
+
 	private void ShowPop() {
 		View view = getLayoutInflater().inflate(R.layout.pop_window2, null);
 		LinearLayout tan = (LinearLayout) view.findViewById(R.id.tan);
@@ -288,7 +293,7 @@ public class StepOne extends MapActivity {
 		App app = (App) this.getApplication();
 		app.mBMapMan.getLocationManager().removeUpdates(mLocationListener);
 		mLocationOverlay.disableMyLocation();
-		// mLocationOverlay.disableCompass(); // �ر�ָ����
+		// mLocationOverlay.disableCompass(); // 关闭指南针
 		app.mBMapMan.stop();
 		super.onPause();
 	}
@@ -296,8 +301,11 @@ public class StepOne extends MapActivity {
 	@Override
 	protected void onResume() {
 		App app = (App) this.getApplication();
-		app.mBMapMan.getLocationManager().requestLocationUpdates(mLocationListener);
+		// 注册定位事件，定位后将地图移动到定位点
+		app.mBMapMan.getLocationManager().requestLocationUpdates(
+                mLocationListener);
 		mLocationOverlay.enableMyLocation();
+		// mLocationOverlay.enableCompass(); // 打开指南针
 		app.mBMapMan.start();
 		super.onResume();
 	}
