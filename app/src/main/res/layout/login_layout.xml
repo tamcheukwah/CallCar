@@ -9,7 +9,7 @@
         android:id="@+id/top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/title_bg" >
+        android:background="@color/material_blue_grey_800" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -114,20 +114,20 @@
 
             <Button
                 android:id="@+id/login"
-                android:layout_width="wrap_content"
+                android:layout_width="137dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5.0dip"
-                android:background="@drawable/long_button_selector"
+                android:background="@color/material_blue_grey_900"
                 android:text="@string/login"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/register"
-                android:layout_width="wrap_content"
+                android:layout_width="142dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5.0dip"
-                android:background="@drawable/long_button_selector"
+                android:background="@color/material_blue_grey_900"
                 android:text="@string/register"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />

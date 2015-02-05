@@ -9,7 +9,7 @@
         android:id="@+id/top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/title_bg" >
+        android:background="@color/material_blue_grey_800" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="5.0dip"
             android:layout_marginRight="10.0dip"
-            android:background="@drawable/btn_selector"
+            android:background="@color/material_blue_grey_900"
             android:padding="5.0dip"
             android:text="@string/back"
             android:textColor="@android:color/white" />
@@ -160,11 +160,11 @@
 
             <Button
                 android:id="@+id/save"
-                android:layout_width="wrap_content"
+                android:layout_width="113dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10.0dip"
                 android:layout_marginTop="20.0dip"
-                android:background="@drawable/long_button_selector"
+                android:background="@color/button_material_dark"
                 android:text="@string/sure"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />

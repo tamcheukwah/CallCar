@@ -8,8 +8,8 @@
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/title_bg" >
+        android:layout_height="38dp"
+        android:background="@color/material_blue_grey_800" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5.0dip"
-                android:background="@drawable/long_button_blue_selector"
+                android:background="@color/material_blue_grey_900"
                 android:text="@string/setting"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5.0dip"
-                android:background="@drawable/long_button_selector"
+                android:background="@color/material_blue_grey_900"
                 android:text="@string/callRecord"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5.0dip"
-                android:background="@drawable/long_yellow_button_selector"
+                android:background="@color/material_blue_grey_900"
                 android:text="@string/nextstep"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
