@@ -39,17 +39,14 @@ public class SettingAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		AreaHolder holder = null;
 		if (convertView == null) {
-			convertView = LayoutInflater.from(context).inflate(
-					R.layout.setting_item, null);
+			convertView = LayoutInflater.from(context).inflate(R.layout.setting_item, null);
 			holder = new AreaHolder();
 			holder.text = (TextView) convertView.findViewById(R.id.text);
-
 			convertView.setTag(holder);
 		} else {
 			holder = (AreaHolder) convertView.getTag();
 		}
 		holder.text.setText(newslist.get(position));
-
 		return convertView;
 	}
 

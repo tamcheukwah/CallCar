@@ -7,6 +7,7 @@ import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
 import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.MyLocationOverlay;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.rd.Util.DialogManager;
 import com.rd.Util.ExitApplication;
 import com.rd.Util.UpdateCustomer;
@@ -43,7 +44,7 @@ public class StepOne extends MapActivity {
 	LocationListener mLocationListener = null;// onResume时注册此listener，onPause时需要Remove
 	MyLocationOverlay mLocationOverlay = null; // 定位图层
 
-	//String cityName;
+//	String cityName;
 	MapController mMapController;
 
 	EditText input_address;
@@ -61,10 +62,11 @@ public class StepOne extends MapActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+        final SlidingMenu menu = new SlidingMenu(this);//初始化组件
+		setContentView(R.layout.activity_main);//设置视图
 		ExitApplication.getInstance().addActivity(this);
 
-		new UpdateCustomer(this, false).Lgoining();
+		new UpdateCustomer(this, false).Logging();
 
 		app = (App) this.getApplication();
 		if (app.mBMapMan == null) {
@@ -82,8 +84,7 @@ public class StepOne extends MapActivity {
 		mMapView.setBuiltInZoomControls(true);
 		// 初始化搜索模块，注册事件监听
 		mMapController = mMapView.getController(); // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
-		GeoPoint point = new GeoPoint((int) (39.915 * 1E6),
-				(int) (116.404 * 1E6)); // 用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
+		GeoPoint point = new GeoPoint((int) (39.915 * 1E6), (int) (116.404 * 1E6)); // 用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
 		mMapController.setCenter(point); // 设置地图中心点
 		mMapController.setZoom(18); // 设置地图zoom级别
 
@@ -143,15 +144,13 @@ public class StepOne extends MapActivity {
 		back = (Button) findViewById(R.id.back);
 		back.setOnClickListener(new OnClick());
 
-		loadText = (TextView) findViewById(R.id.loadText);
+        loadText = (TextView) findViewById(R.id.loadText);
 
 		local = (Button) findViewById(R.id.local);
 		local.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				app.mBMapMan.getLocationManager().requestLocationUpdates(
-						mLocationListener);
+				app.mBMapMan.getLocationManager().requestLocationUpdates(mLocationListener);
 				mLocationOverlay.enableMyLocation();
 			}
 		});
@@ -185,9 +184,7 @@ public class StepOne extends MapActivity {
 					startActivity(new Intent(StepOne.this, Login.class));
 				} else {
 					String beginStr = input_address.getText().toString().trim();
-					if (beginStr.equals("")
-							|| beginStr.equals(R.string.loadingAdd)
-							|| beginStr.equals(R.string.loadAddFail)) {
+					if (beginStr.equals("") || beginStr.equals(R.string.loadingAdd) || beginStr.equals(R.string.loadAddFail)) {
 						ShowToast(R.string.beginErr);
 					} else {
 						SaveBegin(beginStr);
@@ -206,14 +203,12 @@ public class StepOne extends MapActivity {
 		View view = getLayoutInflater().inflate(R.layout.pop_window2, null);
 		LinearLayout tan = (LinearLayout) view.findViewById(R.id.tan);
 		ListView settingList = (ListView) view.findViewById(R.id.settingList);
-		SettingAdapter adapter = new SettingAdapter(this,
-				staticData.getSettingList());
+		SettingAdapter adapter = new SettingAdapter(this, staticData.getSettingList());
 		settingList.setAdapter(adapter);
 		settingList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				if (popup != null) {
 					if (popup.isShowing()) {
 						popup.dismiss();
@@ -221,6 +216,7 @@ public class StepOne extends MapActivity {
 				}
 
 				if (!app.getLogin()) {
+                    //先登录
 					startActivity(new Intent(StepOne.this, Login.class));
 				} else {
 					switch (arg2) {
@@ -234,8 +230,7 @@ public class StepOne extends MapActivity {
 						startActivity(new Intent(StepOne.this, CallRecord.class));
 						break;
 					case 3:
-						startActivity(new Intent(StepOne.this,
-								SettingActivity.class));
+						startActivity(new Intent(StepOne.this, SettingActivity.class));
 						break;
 					case 4:
 						app.SaveLogin(false);
@@ -249,8 +244,7 @@ public class StepOne extends MapActivity {
 			}
 		});
 
-		popup = new PopupWindow(view, LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT);
+		popup = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		popup.setFocusable(true);
 		popup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		popup.update();
@@ -266,8 +260,7 @@ public class StepOne extends MapActivity {
 		tan.setOnKeyListener(new OnKeyListener() {
 
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN
-						&& keyCode == KeyEvent.KEYCODE_BACK) {
+				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
 					if (popup != null) {
 						if (popup.isShowing()) {
 							popup.dismiss();

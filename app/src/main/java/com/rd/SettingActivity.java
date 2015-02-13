@@ -129,7 +129,7 @@ public class SettingActivity extends Activity {
 				alertDialog.show();
 				break;
 			case R.id.updateRelative:
-				new UpdateCustomer(SettingActivity.this, true).Lgoining();
+				new UpdateCustomer(SettingActivity.this, true).Logging();
 				break;
 			}
 		}

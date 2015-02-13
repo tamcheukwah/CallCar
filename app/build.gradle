@@ -26,4 +26,5 @@ dependencies {
     compile files('src/main/java/libs/android_api_1.1_forsdk.jar')
     compile files('src/main/java/libs/BaiduLBS_Android.jar')
     compile files('src/main/java/libs/galaxy_mini.jar')
+    compile files('src/main/java/libs/SlidingMenu.jar')
 }

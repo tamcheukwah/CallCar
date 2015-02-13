@@ -25,7 +25,7 @@ public class UpdateCustomer {
 		isShow = isShowHint;
 	}
 
-	public void Lgoining() {
+	public void Logging() {
 
 		new Thread(new Runnable() {
 

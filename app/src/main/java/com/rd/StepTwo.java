@@ -90,8 +90,7 @@ public class StepTwo extends Activity {
 
 	class OnItem implements OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			customerChooseList.setVisibility(View.GONE);
 			ShowDropDown.setText(((TextView) arg1.findViewById(R.id.text))
 					.getText());
@@ -123,9 +122,9 @@ public class StepTwo extends Activity {
 	}
 
 	private void goNext() {
-		String teminal = endName.getText().toString().trim();
+		String terminal = endName.getText().toString().trim();
 		String type = ShowDropDown.getText().toString().trim();
-		if (teminal.equals("")) {
+		if (terminal.equals("")) {
 			ShowToast(R.string.enterEnd);
 			return;
 		}
@@ -135,9 +134,9 @@ public class StepTwo extends Activity {
 			return;
 		}
 
-		insertTable(teminal);
+		insertTable(terminal);
 
-		SaveEnd("key", teminal);
+		SaveEnd("key", terminal);
 		SaveEnd("type", type);
 
 		ShowSureDialog();
